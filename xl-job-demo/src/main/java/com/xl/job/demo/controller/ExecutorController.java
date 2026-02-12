@@ -1,7 +1,8 @@
-package com.xl.job.executor.controller;
+package com.xl.job.demo.controller;
 
 import com.xl.job.core.protocol.TriggerRequest;
 import com.xl.job.core.protocol.TriggerResponse;
+import com.xl.job.executor.client.AdminClient;
 import com.xl.job.executor.processor.JobProcessor;
 import com.xl.job.executor.processor.JobProcessorFactory;
 import com.xl.job.executor.thread.JobThread;
@@ -22,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ExecutorController {
 
     private final JobProcessorFactory jobProcessorFactory;
+    private final AdminClient adminClient;
 
     private final Map<String, JobThread> jobThreadMap = new ConcurrentHashMap<>();
     private final Map<String, TriggerQueue> triggerQueueMap = new ConcurrentHashMap<>();
@@ -43,7 +45,7 @@ public class ExecutorController {
 
         // 获取或创建任务队列
         TriggerQueue queue = triggerQueueMap.computeIfAbsent(jobHandler, k -> {
-            JobThread jobThread = new JobThread(jobHandler, jobProcessor, null);
+            JobThread jobThread = new JobThread(jobHandler, jobProcessor, adminClient);
             jobThreadMap.put(jobHandler, jobThread);
             TriggerQueue q = new TriggerQueue(jobThread);
             q.start();

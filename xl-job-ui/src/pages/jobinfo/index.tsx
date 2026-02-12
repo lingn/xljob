@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   Table, Button, Space, Modal, Form, Input, Select, InputNumber,
-  Popconfirm, Tag, Card, Row, Col
+  Popconfirm, Tag, Card, Row, Col, message
 } from 'antd'
 import {
   PlusOutlined, EditOutlined, DeleteOutlined, PlayCircleOutlined,
@@ -126,6 +126,7 @@ const JobInfoPage: React.FC = () => {
   const handleDelete = async (id: number) => {
     try {
       await deleteJobInfo(id)
+      message.success('删除成功')
       fetchJobInfoList()
     } catch {
       // 错误已在拦截器中处理
@@ -135,6 +136,7 @@ const JobInfoPage: React.FC = () => {
   const handleStart = async (id: number) => {
     try {
       await startJob(id)
+      message.success('启动成功')
       fetchJobInfoList()
     } catch {
       // 错误已在拦截器中处理
@@ -144,6 +146,7 @@ const JobInfoPage: React.FC = () => {
   const handleStop = async (id: number) => {
     try {
       await stopJob(id)
+      message.success('停止成功')
       fetchJobInfoList()
     } catch {
       // 错误已在拦截器中处理
@@ -160,6 +163,7 @@ const JobInfoPage: React.FC = () => {
     if (triggeringJob) {
       try {
         await triggerJob(triggeringJob.id, triggerParam)
+        message.success('触发成功')
         setTriggerModalVisible(false)
       } catch {
         // 错误已在拦截器中处理
@@ -172,8 +176,10 @@ const JobInfoPage: React.FC = () => {
       const values = await form.validateFields()
       if (editingItem) {
         await updateJobInfo({ ...values, id: editingItem.id })
+        message.success('更新成功')
       } else {
         await addJobInfo(values)
+        message.success('添加成功')
       }
       setModalVisible(false)
       fetchJobInfoList()
