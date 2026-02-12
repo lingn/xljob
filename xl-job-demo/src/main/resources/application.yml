@@ -1,0 +1,15 @@
+server:
+  port: 8081
+
+xl:
+  job:
+    executor:
+      appname: test_app
+      title: 默认执行器
+      port: 9999
+      admin-addresses: http://127.0.0.1:8080
+      heartbeat-interval: 30
+
+logging:
+  level:
+    com.xl.job: DEBUG

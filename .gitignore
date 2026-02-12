@@ -1,0 +1,14 @@
+# IDE
+.idea/
+*.iml
+
+# Backend build outputs
+**/target/
+*.class
+
+# Frontend dependencies and build outputs
+**/node_modules/
+**/dist/
+
+# Common logs
+*.log
